@@ -2,7 +2,8 @@
 module.exports = {
   content: [
     "./main/templates/main/*.html",
-    "./templates"
+    "./main/templates/main/includes/*.html",
+    "./templates/*.html",
   ],
   theme: {
     fontFamily: {

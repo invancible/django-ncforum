@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<div class="flex flex-col w-1/2 mx-auto my-5">
+  <!-- Post Card -->
+  <div class="bg-white shadow-lg rounded-lg overflow-hidden mb-6">
+    <div class="flex items-center px-6 py-4">
+      <img class="h-12 w-12 rounded-full object-cover" src="https://source.unsplash.com/60x60/?portrait" alt="User image">
+      <div class="ml-4">
+        <h2 class="text-lg font-semibold text-gray-900">Username</h2>
+      </div>
+    </div>
+    <div class="px-6 py-4">
+      <p class="text-gray-700 text-base">
+        {{ post.content }}
+      </p>
+    </div>
+    <div class="flex items-center  px-6 py-4">
+      <button class="text-gray-700 text-sm py-2 px-4 rounded hover:bg-gray-200">
+          {% comment %} {% if  %}
+            <i class="fa-solid fa-thumbs-up"></i>
+          {% else %} {% endcomment %}
+            <i class="fa-regular fa-thumbs-up"></i>
+          {% comment %} {% endif %} {% endcomment %}
+          Like
+      </button>
+      <a href="{% url 'post-detail' post.id %}" class="text-gray-700 text-sm py-2 px-4 rounded hover:bg-gray-200">
+          <i class="fa-regular fa-comment"></i>
+          Comment
+      </a>
+    </div>
+  </div>
+  
+  <!-- Comments -->
+  <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+    <div class="p-6">
+      <h3 class="text-lg font-bold mb-4">Comments</h3>
+      
+      <!-- Comment -->
+      {% for comment in comments  %}
+        <div class="flex items-start mb-4">
+          <img class="h-12 w-12 mr-4 rounded-full object-cover" src="https://source.unsplash.com/60x60/?portrait" alt="User image">
+          <div class="flex-grow">
+            <h4 class="font-bold text-gray-800">Commenter Name</h4>
+            <p class="text-gray-700 text-base">
+              {{ comment.content }}
+            </p>
+          </div>
+        </div>
+      {% endfor %}
+
+      <!-- Add Comment Form -->
+      <form class="flex items-start">
+        <img class="h-12 w-12 mr-4 rounded-full object-cover" src="https://source.unsplash.com/60x60/?portrait" alt="User image">
+        <div class="flex-grow">
+          <textarea placeholder="Add a comment..." class="w-full border rounded-lg p-2"></textarea>
+          <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-2">Post Comment</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
