@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
-
+{% load static %}
 
 {% block content %}
 <div class="flex flex-col w-1/2 mx-auto my-5">
   <!-- Post Card -->
   <div class="bg-white shadow-lg rounded-lg overflow-hidden mb-6">
     <div class="flex items-center px-6 py-4">
-      <img class="h-12 w-12 rounded-full object-cover" src="https://source.unsplash.com/60x60/?portrait" alt="User image">
+      <img class="h-12 w-12 rounded-full object-cover" src="{% static 'images/placeholder.jpeg' %}" alt="User image">
       <div class="ml-4">
         <h2 class="text-lg font-semibold text-gray-900">Username</h2>
       </div>
@@ -40,7 +40,7 @@
       <!-- Comment -->
       {% for comment in comments  %}
         <div class="flex items-start mb-4">
-          <img class="h-12 w-12 mr-4 rounded-full object-cover" src="https://source.unsplash.com/60x60/?portrait" alt="User image">
+          <img class="h-12 w-12 mr-4 rounded-full object-cover" src="{% static 'images/placeholder.jpeg' %}" alt="User image">
           <div class="flex-grow">
             <h4 class="font-bold text-gray-800">Commenter Name</h4>
             <p class="text-gray-700 text-base">
@@ -51,10 +51,11 @@
       {% endfor %}
 
       <!-- Add Comment Form -->
-      <form class="flex items-start">
-        <img class="h-12 w-12 mr-4 rounded-full object-cover" src="https://source.unsplash.com/60x60/?portrait" alt="User image">
+      <form class="flex items-start" method="POST">
+        {% csrf_token %}
+        <img class="h-12 w-12 mr-4 rounded-full object-cover" src="{% static 'images/placeholder.jpeg' %}" alt="User image">
         <div class="flex-grow">
-          <textarea placeholder="Add a comment..." class="w-full border rounded-lg p-2"></textarea>
+          {{ form.content }}
           <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded-lg mt-2">Post Comment</button>
         </div>
       </form>

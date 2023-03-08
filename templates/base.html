@@ -1,24 +1,29 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NCForum</title>
-    <link rel="stylesheet" href="{% static 'styles/main.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/main.css' %}" />
     {% block styles %}{% endblock %}
-</head>
-<body class="bg-background">
+  </head>
+  <body class="bg-background">
     <!-- Sidebar -->
     {% include 'sidebar.html' %}
     <!-- Main content -->
     <main class="flex">
-        <div class="w-15p"></div> <!-- I put this to occupy the space of sidebar -->
-        {% block content %}{% endblock %}
+      <div class="w-15p"></div>
+      <!-- I put this to occupy the space of sidebar -->
+      {% block content %}{% endblock %}
     </main>
-</body>
+  </body>
 </html>
 
-<script src="https://kit.fontawesome.com/3d0fb58e90.js" crossorigin="anonymous"></script>
+<script
+  src="{% static 'js/fontawesome.min.js' %}"
+  crossorigin="anonymous"
+></script>
+<script src="{% static 'js/jquery.min.js' %}"></script>
 {% block scripts %}{% endblock %}

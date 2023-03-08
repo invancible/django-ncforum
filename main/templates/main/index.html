@@ -1,24 +1,39 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block styles %}
+<link rel="stylesheet" href="{% static 'styles/modal.min.css' %}" />
+{% endblock styles %}
 
 {% block content %}
-    <div class="w-full">
-      <!-- Search bar -->
-        <div class="flex justify-center my-5">
-            <form class="w-1/2" method="GET" action="{% url 'index' %}">
+<div class="w-full">
+    <div class="fixed bottom-5 right-5">
+        <a href="#ex1" rel="modal:open" id="create-post" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-full">
+            <i class="fa-solid fa-plus text-xl"></i>
+        </a>
+    </div>
+    <!-- Search bar -->
+    <div class="flex justify-center my-5">
+        <form class="w-1/2" method="GET" action="{% url 'index' %}">
             <div class="flex items-center bg-white rounded-full shadow-xl">
                 <input class="rounded-l-full w-full py-4 px-6 text-gray-700 leading-tight focus:outline-none" id="search" name="q" type="text" placeholder="Search">
                 <div class="p-2">
                 <button type="submit" class="bg-blue-500 text-white rounded-full  hover:bg-blue-400 focus:outline-none w-10 h-10 flex items-center justify-center">
                     <i class="fa-solid fa-magnifying-glass"></i>
                 </button>
-                </div>
             </div>
-            </form>
         </div>
+    </form>
+</div>
 
-        {% for post in posts %}
-            {% include 'main/includes/post-item.html' %}
-        {% endfor %}
-          
-    </div>
+{% for post in posts %}
+{% include 'main/includes/post-item.html' %}
+{% endfor %}
+
+{% include 'main/includes/create-post.html' %}  
+    
 {% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/modal.min.js' %}"></script>
+{% endblock scripts %}
