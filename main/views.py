@@ -2,55 +2,60 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.db.models import Q
 from django.views.generic.base import TemplateView
+from django.views.generic import ListView, DetailView
 
 from .models import Post
 from .forms import CreatePostForm, CreateCommentForm
 
 
-def index(request):
-    query = request.GET.get('q') if request.GET.get('q') != None else ''
+class IndexView(ListView):
+    model = Post
+    template_name = 'main/index.html'
+    context_object_name = 'posts'
+    paginate_by = 10
+    
+    def get_queryset(self):
+        query = self.request.GET.get('q', '')
+        return Post.objects.filter(Q(content__icontains=query)).order_by('-created_at')
 
-    posts = Post.objects.filter(
-        Q(content__icontains=query)
-    )
-
-    if request.method == 'POST':
+    def post(self, request):
         form = CreatePostForm(request.POST)
 
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/')
         
-    else:
-        form = CreatePostForm()
+        self.object_list = self.get_queryset()
+        context = self.get_context_data(form=form)
+        return self.render_to_response(context)
 
-    context = {
-        'posts': posts,
-        'form': form,
-    }
-    return render(request, 'main/index.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = CreatePostForm()
+        return context
 
 
-def post_detail(request, id):
-    post = Post.objects.get(pk=id)
-    comments = post.comments.all()
-    # comments_count = comments.count()
+class PostDetailView(DetailView):
+    model = Post
+    template_name = 'main/post-detail.html'
+    context_object_name = 'post'
 
-    if request.method == 'POST':
-        form = CreateCommentForm(post, request.POST)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        post = self.get_object()
+        comments = post.comments.all()
+        context['comments'] = comments
+        context['form'] = CreateCommentForm(post=post)
+        return context
 
+    def post(self, request, *args, **kwargs):
+        post = self.get_object()
+        form = CreateCommentForm(post=post, data=request.POST)
         if form.is_valid():
-            comment = form.save(commit=False)
-            comment.post = post
-            comment.save()
-            return redirect('post-detail', id=post.id)
-    else: 
-        form = CreateCommentForm(post)
-
-    context = {
-        'post': post,
-        'comments': comments,
-        'form': form,
-        # 'comments_count': comments_count,
-    }
-    return render(request, 'main/post-detail.html', context)
+            form.instance.post = post
+            form.save()
+            return redirect('post-detail', pk=post.pk)
+        else:
+            context = self.get_context_data()
+            context['form'] = form
+            return self.render_to_response(context)
