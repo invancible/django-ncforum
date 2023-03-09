@@ -3,6 +3,8 @@ from django.shortcuts import redirect, render
 from django.db.models import Q
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DetailView
+from django.core.paginator import Paginator
+from django.core.paginator import EmptyPage, PageNotAnInteger
 
 from .models import Post
 from .forms import CreatePostForm, CreateCommentForm
@@ -16,13 +18,34 @@ class IndexView(ListView):
     
     def get_queryset(self):
         query = self.request.GET.get('q', '')
-        return Post.objects.filter(Q(content__icontains=query)).order_by('-created_at')
+        queryset = Post.objects.filter(Q(content__icontains=query)).order_by('-created_at')
+        paginator = Paginator(queryset, self.paginate_by)
+        page_number = self.request.GET.get('page')
+        # return paginator.get_page(page_number)
+        print(f"Number of results per page: {len(paginator.get_page(page_number))}")
+        print(paginator.get_page(page_number).has_other_pages)    
+        try:
+            page_obj = paginator.get_page(page_number)
+        except PageNotAnInteger:
+            page_obj = paginator.get_page(1)
+        except EmptyPage:
+            page_obj = paginator.get_page(paginator.num_pages)
+
+        return queryset
 
     def post(self, request):
-        form = CreatePostForm(request.POST)
+        form = CreatePostForm(request.POST, request.FILES)
 
         if form.is_valid():
-            form.save()
+            post = form.save(commit=False)
+            
+            image = request.FILES.get('image')
+            print(image)
+            if image:
+                post.image = image
+            
+            post.save()
+
             return HttpResponseRedirect('/')
         
         self.object_list = self.get_queryset()
@@ -32,6 +55,7 @@ class IndexView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = CreatePostForm()
+        context['page_obj'] = self.get_queryset()
         return context
 
 

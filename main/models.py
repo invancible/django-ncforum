@@ -4,7 +4,7 @@ from django.db import models
 class Post(models.Model):
   # author = 
   content = models.TextField(max_length=200)
-  # image = 
+  image = models.ImageField(upload_to='images', null=True)
   # likes = 
   # comments = models.ForeignKey(Comment, on_delete=models.CASCADE, null=True)
   # comments = models.ManyToManyField()
