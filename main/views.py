@@ -1,6 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.db.models import Q
+from django.views.generic.base import TemplateView
 
 from .models import Post
 from .forms import CreatePostForm, CreateCommentForm
