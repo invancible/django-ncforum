@@ -18,14 +18,16 @@
         </div>
 
         <div class="flex justify-center items-center">
-            <form action="" class="w-96">
+            <form action="{% url 'signup' %}" method="POST" class="w-96">
+                {% csrf_token %}
                 <div class="p-2 sm:p-0">
                     <div>
                         <div>
-                            <label for="Email" class="italic font-medium pl-2 text-white">Full Name</label>
+                            <label for="Email" class="italic font-medium pl-2 text-white">Email</label>
                         </div>
                         <div>
-                            <input type="text" class="focus:outline-none rounded-md shadow-md bg-background  p-2 w-full">
+                            {% comment %} <input type="text" class="focus:outline-none rounded-md shadow-md bg-background  p-2 w-full"> {% endcomment %}
+                            {{ form.email }}
                         </div>
                     </div>
 
@@ -35,7 +37,8 @@
                                 <label for="Fullname" class="italic font-medium pl-2 text-white">Username</label>
                             </div>
                             <div>
-                                <input type="text" class="focus:outline-none rounded-md shadow-md bg-background  p-2 w-full">
+                                {% comment %} <input type="text" class="focus:outline-none rounded-md shadow-md bg-background  p-2 w-full"> {% endcomment %}
+                                {{ form.username }}
                             </div>
                         </div>
                     </div>
@@ -46,7 +49,8 @@
                                 <label for="Password" class="italic font-medium pl-2 text-white">Password:</label>
                             </div>
                             <div>
-                                <input type="password" class="w-40 sm:w-44 focus:outline-none bg-background  rounded-md shadow-md  p-2">
+                                {% comment %} <input type="password" class="w-40 sm:w-44 focus:outline-none bg-background  rounded-md shadow-md  p-2"> {% endcomment %}
+                                {{ form.password1 }}
                             </div>
                         </div>
                         <div>
@@ -54,7 +58,8 @@
                                 <label for="Confirm Password" class="italic font-medium pl-2 text-white">Confirm Password</label>
                             </div>
                             <div>
-                                <input type="password" class="w-40 sm:w-44 focus:outline-none bg-background  rounded-md shadow-md  p-2">
+                                {% comment %} <input type="password" class="w-40 sm:w-44 focus:outline-none bg-background  rounded-md shadow-md  p-2"> {% endcomment %}
+                                {{ form.password2 }}
                             </div>
                         </div>
                     </div>

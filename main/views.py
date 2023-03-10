@@ -2,13 +2,13 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.db.models import Q
 from django.views import View
-from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DetailView
-from django.core.paginator import Paginator
-from django.core.paginator import EmptyPage, PageNotAnInteger
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.contrib.auth.views import LoginView, LogoutView
+from django.urls import reverse_lazy
 
 from .models import Post
-from .forms import CreatePostForm, CreateCommentForm
+from .forms import CreatePostForm, CreateCommentForm, CustomUserCreationForm
 
 
 class IndexView(ListView):
@@ -86,19 +86,23 @@ class PostDetailView(DetailView):
             return self.render_to_response(context)
         
 
-class LoginView(View):
-    
-    def get(self, request):
-        return render(request, 'main/login.html')
-
-    def post(self, request):
-        pass
+class CustomLoginView(LoginView):
+    template_name = 'main/login.html'
+    success_url = reverse_lazy('')
 
 
 class SignupView(View):
     
     def get(self, request):
-        return render(request, 'main/signup.html')
+        form = CustomUserCreationForm()
+        return render(request, 'main/signup.html', {'form': form})
 
     def post(self, request):
-        pass
+        form = CustomUserCreationForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('login') 
+        
+
+class CustomLogoutView(LogoutView):
+    next_page = 'index'
