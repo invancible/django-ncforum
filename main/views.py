@@ -1,6 +1,7 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.db.models import Q
+from django.views import View
 from django.views.generic.base import TemplateView
 from django.views.generic import ListView, DetailView
 from django.core.paginator import Paginator
@@ -83,3 +84,21 @@ class PostDetailView(DetailView):
             context = self.get_context_data()
             context['form'] = form
             return self.render_to_response(context)
+        
+
+class LoginView(View):
+    
+    def get(self, request):
+        return render(request, 'main/login.html')
+
+    def post(self, request):
+        pass
+
+
+class SignupView(View):
+    
+    def get(self, request):
+        return render(request, 'main/signup.html')
+
+    def post(self, request):
+        pass
