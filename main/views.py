@@ -6,11 +6,14 @@ from django.views.generic import ListView, DetailView
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 from .models import Post
 from .forms import CreatePostForm, CreateCommentForm, CustomUserCreationForm
 
 
+# @method_decorator(login_required, name='dispatch')
 class IndexView(ListView):
     model = Post
     template_name = 'main/index.html'
@@ -90,10 +93,18 @@ class CustomLoginView(LoginView):
     template_name = 'main/login.html'
     success_url = reverse_lazy('')
 
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('/')
+        return super().dispatch(request, *args, **kwargs)
+
 
 class SignupView(View):
     
     def get(self, request):
+        if request.user.is_authenticated:
+            return redirect('/')
+        
         form = CustomUserCreationForm()
         return render(request, 'main/signup.html', {'form': form})
 

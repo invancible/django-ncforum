@@ -7,11 +7,13 @@
 
 {% block content %}
 <div class="w-full">
-    <div class="fixed bottom-5 right-5">
-        <a href="#ex1" rel="modal:open" id="create-post" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-full">
-            <i class="fa-solid fa-plus text-xl"></i>
-        </a>
-    </div>
+    {% if user.is_authenticated %}
+        <div class="fixed bottom-5 right-5">
+            <a href="#ex1" rel="modal:open" id="create-post" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-full">
+                <i class="fa-solid fa-plus text-xl"></i>
+            </a>
+        </div>
+    {% endif %}
     <!-- Search bar -->
     <div class="flex justify-center my-5">
         <form class="w-1/2" method="GET" action="{% url 'index' %}">
@@ -29,7 +31,6 @@
 {% for post in posts %}
 {% include 'main/includes/post-item.html' %}
 {% endfor %}
-
 
 
 

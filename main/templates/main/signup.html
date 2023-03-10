@@ -31,6 +31,27 @@
                         </div>
                     </div>
 
+                    <div class="flex justify-between items-center mt-5">
+                        <div>
+                            <div>
+                                <label for="Password" class="italic font-medium pl-2 text-white">First Name:</label>
+                            </div>
+                            <div>
+                                {% comment %} <input type="password" class="w-40 sm:w-44 focus:outline-none bg-background  rounded-md shadow-md  p-2"> {% endcomment %}
+                                {{ form.first_name }}
+                            </div>
+                        </div>
+                        <div>
+                            <div>
+                                <label for="Confirm Password" class="italic font-medium pl-2 text-white">Last Name</label>
+                            </div>
+                            <div>
+                                {% comment %} <input type="password" class="w-40 sm:w-44 focus:outline-none bg-background  rounded-md shadow-md  p-2"> {% endcomment %}
+                                {{ form.last_name }}
+                            </div>
+                        </div>
+                    </div>
+
                     <div class=" mt-5">
                         <div>
                             <div>
