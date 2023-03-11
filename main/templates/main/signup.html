@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 
 {% block styles %}
 
@@ -26,62 +27,80 @@
                             <label for="Email" class="italic font-medium pl-2 text-white">Email</label>
                         </div>
                         <div>
-                            {% comment %} <input type="text" class="focus:outline-none rounded-md shadow-md bg-background  p-2 w-full"> {% endcomment %}
-                            {{ form.email }}
+                            {% render_field form.email type="email" class="focus:outline-none rounded-md shadow-md bg-background  p-2 w-full" %}
                         </div>
+                        {% if form.email.errors %}
+                            <ul class="errorlist">
+                            {% for error in form.email.errors %}
+                                <li class="text-sm text-red-400">{{ error }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
                     </div>
 
                     <div class="flex justify-between items-center mt-5">
                         <div>
                             <div>
-                                <label for="Password" class="italic font-medium pl-2 text-white">First Name:</label>
+                                <label for="first_name" class="italic font-medium pl-2 text-white">First Name:</label>
                             </div>
                             <div>
-                                {% comment %} <input type="password" class="w-40 sm:w-44 focus:outline-none bg-background  rounded-md shadow-md  p-2"> {% endcomment %}
-                                {{ form.first_name }}
+                                {% render_field form.first_name class="w-40 sm:w-44 focus:outline-none bg-background  rounded-md shadow-md  p-2" %}
                             </div>
+                            {% render_field form.first_name.errors class="text-sm text-red-400"%}
                         </div>
                         <div>
                             <div>
-                                <label for="Confirm Password" class="italic font-medium pl-2 text-white">Last Name</label>
+                                <label for="last_name" class="italic font-medium pl-2 text-white">Last Name</label>
                             </div>
                             <div>
-                                {% comment %} <input type="password" class="w-40 sm:w-44 focus:outline-none bg-background  rounded-md shadow-md  p-2"> {% endcomment %}
-                                {{ form.last_name }}
+                                {% render_field form.last_name class="w-40 sm:w-44 focus:outline-none bg-background  rounded-md shadow-md  p-2" %}
                             </div>
+                            {% render_field form.last_name.errors class="text-sm text-red-400"%}
                         </div>
                     </div>
 
                     <div class=" mt-5">
                         <div>
                             <div>
-                                <label for="Fullname" class="italic font-medium pl-2 text-white">Username</label>
+                                <label for="username" class="italic font-medium pl-2 text-white">Username</label>
                             </div>
                             <div>
-                                {% comment %} <input type="text" class="focus:outline-none rounded-md shadow-md bg-background  p-2 w-full"> {% endcomment %}
-                                {{ form.username }}
+                                {% render_field form.username class="focus:outline-none rounded-md shadow-md bg-background  p-2 w-full" %}
                             </div>
+                            {% if form.username.errors %}
+                                <ul class="errorlist">
+                                {% for error in form.username.errors %}
+                                    <li class="text-sm text-red-400">{{ error }}</li>
+                                {% endfor %}
+                                </ul>
+                            {% endif %}
                         </div>
                     </div>
 
                     <div class="flex justify-between items-center mt-5">
                         <div>
                             <div>
-                                <label for="Password" class="italic font-medium pl-2 text-white">Password:</label>
+                                <label for="password1" class="italic font-medium pl-2 text-white">Password:</label>
                             </div>
                             <div>
-                                {% comment %} <input type="password" class="w-40 sm:w-44 focus:outline-none bg-background  rounded-md shadow-md  p-2"> {% endcomment %}
-                                {{ form.password1 }}
+                                {% render_field form.password1 type="password" class="w-40 sm:w-44 focus:outline-none bg-background  rounded-md shadow-md  p-2" %}
                             </div>
+                            {% render_field form.password1.errors class="text-sm text-red-400"%}
                         </div>
                         <div>
                             <div>
-                                <label for="Confirm Password" class="italic font-medium pl-2 text-white">Confirm Password</label>
+                                <label for="password2" class="italic font-medium pl-2 text-white">Confirm Password</label>
                             </div>
                             <div>
-                                {% comment %} <input type="password" class="w-40 sm:w-44 focus:outline-none bg-background  rounded-md shadow-md  p-2"> {% endcomment %}
-                                {{ form.password2 }}
+                                {% render_field form.password2 type="password" class="w-40 sm:w-44 focus:outline-none bg-background  rounded-md shadow-md  p-2" %}
                             </div>
+                            {% if form.password2.errors %}
+                                <ul class="errorlist">
+                                {% for error in form.password2.errors %}
+                                    <li class="text-sm text-red-400">{{ error }}</li>
+                                {% endfor %}
+                                </ul>
+                            {% endif %}
                         </div>
                     </div>
 

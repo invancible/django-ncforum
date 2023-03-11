@@ -42,7 +42,7 @@ class IndexView(ListView):
 
         if form.is_valid():
             post = form.save(commit=False)
-            
+            post.author = request.user
             image = request.FILES.get('image')
             print(image)
             if image:
@@ -113,6 +113,7 @@ class SignupView(View):
         if form.is_valid():
             form.save()
             return redirect('login') 
+        return render(request, 'main/signup.html', {'form': form})
         
 
 class CustomLogoutView(LogoutView):

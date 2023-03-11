@@ -16,7 +16,7 @@ class User(AbstractUser):
 
 
 class Post(models.Model):
-  # author = 
+  author = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
   content = models.TextField(max_length=200)
   image = models.ImageField(upload_to='images', null=True)
   # likes = 

@@ -7,7 +7,7 @@ class CreatePostForm(forms.ModelForm):
   image = forms.ImageField(required=False)
   class Meta:
     model = Post
-    fields = '__all__'
+    fields = ['content', 'image']
 
 
 class CreateCommentForm(forms.ModelForm):
@@ -26,4 +26,4 @@ class CustomUserCreationForm(UserCreationForm):
 
   class Meta(UserCreationForm.Meta):
     model = User
-    fields = UserCreationForm.Meta.fields + ('email', 'first_name', 'last_name', 'avatar', 'bio')
+    fields = UserCreationForm.Meta.fields + ('email', 'first_name', 'last_name',)
